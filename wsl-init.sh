@@ -6,6 +6,15 @@ cd ~
 # make Projects folder
 mkdir Projects
 
+
+# SSH KEY
+FILE=~/.ssh/id_rsa.pub
+if [ -f "$FILE" ]; then
+    echo "$FILE exists, not creating new ssh key"
+else 
+    ssh-keygen -t rsa -N ''
+fi
+
 # NODEJS
 if which node > /dev/null
     then

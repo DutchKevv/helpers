@@ -4,13 +4,17 @@
 cd ~
 
 # make Projects folder
-mkdir Projects
-
+PROJECT_DIRECTORY=~/Projects
+if [ -f "$PROJECT_DIRECTORY" ]; then
+    echo "Projects directory exists, not creating new"
+else 
+    mkdir Projects
+fi
 
 # SSH KEY
-FILE=~/.ssh/id_rsa.pub
-if [ -f "$FILE" ]; then
-    echo "$FILE exists, not creating new ssh key"
+SSH_KEY_FILE=~/.ssh/id_rsa.pub
+if [ -f "$SSH_KEY_FILE" ]; then
+    echo "SSH key exists, not creating new"
 else 
     ssh-keygen -t rsa -N ''
 fi
@@ -51,6 +55,17 @@ for i in "$@" ; do
                 sudo groupadd docker
                 sudo usermod -aG docker $USER
                 break
+        fi
+    fi
+
+    # JAVA
+    if [[ $i == "java" ]] ; then
+
+        if which java > /dev/null
+            then
+                echo "java is installed, skipping..."
+            else
+                sudo apt-get install openjdk-11-jdk
         fi
     fi
 done
